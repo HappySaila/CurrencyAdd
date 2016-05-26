@@ -16,10 +16,8 @@ public class CurrencyAddJava{
 		int totalAmount = 0;
 		for (String val : stringValues){
 			intValue+=cleanData(val);
-			System.out.println(intValue);
 		}
-		System.out.println(currencySymbol);
-		return 0;
+		return ConvertToCurrency(intValue, currencySymbol)//return the final answer;
 	}
 	
 	private static int cleanData(String val){
@@ -32,5 +30,11 @@ public class CurrencyAddJava{
 		val = val.substring(0,1)+val.substring(2);//removing the currency symbol
 		int intVal = Integer.parseInt(val);
 		return intVal;
+	}
+	
+	private static ConvertToCurrency(int val, char currencySymbol){
+		//convert an integer value into a string value
+		//eg.. -123456789 will return  -R1,234,567.89
+		
 	}
 }
