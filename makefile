@@ -4,7 +4,6 @@ LIB = ../lib
 SRCDIR = src
 BINDIR = bin
 TESTDIR = test
-DOCDIR = doc
 
 CLI = $(LIB)/cli/commons-cli-1.3.1.jar
 ASM = $(LIB)/asm/asm-5.0.4.jar:$(LIB)/asm/asm-commons-5.0.4.jar:$(LIB)/asm/asm-tree-5.0.4.jar
@@ -13,6 +12,7 @@ JACOCO = $(LIB)/jacoco/org.jacoco.core-0.7.5.201505241946.jar:$(LIB)/jacoco/org.
 TOOLS = $(LIB)/tools
 
 JAVAC = javac
+PYTH = python3
 JFLAGS = -g -d $(BINDIR) -cp $(BINDIR):$(JUNIT)
 
 
@@ -28,14 +28,11 @@ vpath %.class $(BINDIR)/binarytree:$(BINDIR)/binarysearchtree:$(BINDIR)/avltree:
 #default rule - will be invoked by make
 
 
-all: Position.class Node.class LinkedBinaryTree.class BinaryTreeWriter.class SimpleTreeWriter.class \
-	BinarySearchTree.class BSTNode.class LinkedBST.class \
-	AVLNode.class AVLTree.class \
-	BSTHarness.class
+all: CurrencyAddJava.class CurrencyMain.class\
 
 # Rules for unit testing
 # Add additional Testxx.class file to this line and to TestSuite.java
-test_classes: all TestBSTNode.class TestLinkedBST.class TestSuite.class
+test_classes: all TestCurrencyAddJava.class TestSuite.class
 
 test: test_classes
 	java -ea -cp $(BINDIR):$(JUNIT) org.junit.runner.JUnitCore TestSuite
@@ -53,8 +50,6 @@ clean:
 	@rm -f jacoco.exec *.xml *.csv
 	@rm -Rf coveragereport
 	@rm -Rf doc
+	
 run: all
-	java -cp $(BINDIR) BSTHarness
-tester: all
-	javac tester.java
-	java -cp $(BINDIR) tester
+	java -cp $(BINDIR) CurrencyMain
