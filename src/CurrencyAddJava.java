@@ -9,7 +9,7 @@ public class CurrencyAddJava{
 	public static String ConvertToCents(String input){
 		//will convert the input into a float, the total sum number in a float value. Still needs to converted into Currency format
 		//String must have all values divided by a pipe ("|")
-
+		String intValueString;
 		String[] stringValues = input.split("\\|"); //converts the string to an array of strings. seperated by pipes
 		char currencySymbol = stringValues[0].charAt(1); //used to store the symbol of the currency. store as "R" by default
 		int intValue = 0;
@@ -17,7 +17,12 @@ public class CurrencyAddJava{
 		for (String val : stringValues){
 			intValue+=cleanData(val);
 		}
-		String currency = ConvertToCurrency(intValue+"", currencySymbol);//return the final answer;
+		if (intValue>=0){
+			intValueString = "+"+intValue;
+		}else{
+			intValueString = intValue+"";
+		}
+		String currency = ConvertToCurrency(intValueString, currencySymbol);//return the final answer;
 		return currency;
 	}
 
@@ -36,25 +41,21 @@ public class CurrencyAddJava{
 	private static String ConvertToCurrency(String val, char currencySymbol){
 		//convert an integer value into a string value
 		//eg.. -123456789 will return  -R1,234,567.89
+		char sign = val.charAt(0);
+		val = val.substring(1);
 		String cents = val.substring(val.length()-2);
 		val = val.substring(0,val.length()-2);
 		String currency = "";
 		while (val.length()>3){
-			if (val.length()<6){
-				//last iteration, therefore we do not need the final comma
-				currency = val.substring(val.length()-3) + currency;
-			}
-			else{
-				currency =  "," + val.substring(val.length()-3) + currency;
-			}
+			currency =  "," + val.substring(val.length()-3) + currency;
 			val = val.substring(0,val.length()-3);
 		}
-		//add the decimal and the currency symbol
+		//add the decimal and the currency symbol. also add the last numbers after the final comma eg. R12,345.00 val==12
 		if (val.length()>0){
-			currency = currencySymbol + val + "," + currency + "." + cents;
+			currency = sign + "" + currencySymbol + "" + val + "" + currency + "." + cents;
 		}
 		else{
-			currency = currencySymbol + currency + "." + cents;
+			currency = sign + "" + currencySymbol + "" + currency + "." + cents;
 		}
 		return currency;
 	}
