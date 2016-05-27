@@ -1,6 +1,6 @@
 # Makefile for Data Structures Binary Search Tree Assignments
 
-LIB = ../lib
+LIB = lib
 SRCDIR = src
 BINDIR = bin
 TESTDIR = test
@@ -12,12 +12,11 @@ JACOCO = $(LIB)/jacoco/org.jacoco.core-0.7.5.201505241946.jar:$(LIB)/jacoco/org.
 TOOLS = $(LIB)/tools
 
 JAVAC = javac
-PYTH = python3
 JFLAGS = -g -d $(BINDIR) -cp $(BINDIR):$(JUNIT)
 
 
-vpath %.java $(SRCDIR)/binarytree:$(SRCDIR)/binarysearchtree:$(SRCDIR)/avltree:$(SRCDIR)/map:$(SRCDIR):$(TESTDIR)
-vpath %.class $(BINDIR)/binarytree:$(BINDIR)/binarysearchtree:$(BINDIR)/avltree:$(BINDIR)/map:$(BINDIR)
+vpath %.java $(SRCDIR):$(TESTDIR)
+vpath %.class $(BINDIR)
 
 # define general build rule for java sources
 .SUFFIXES:  .java  .class
@@ -28,11 +27,11 @@ vpath %.class $(BINDIR)/binarytree:$(BINDIR)/binarysearchtree:$(BINDIR)/avltree:
 #default rule - will be invoked by make
 
 
-all: CurrencyAddJava.class CurrencyMain.class\
+all: CurrencyAdd.class CurrencyMain.class\
 
 # Rules for unit testing
 # Add additional Testxx.class file to this line and to TestSuite.java
-test_classes: all TestCurrencyAddJava.class TestSuite.class
+test_classes: all TestCurrencyAdd.class TestSuite.class
 
 test: test_classes
 	java -ea -cp $(BINDIR):$(JUNIT) org.junit.runner.JUnitCore TestSuite

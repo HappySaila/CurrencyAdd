@@ -2,11 +2,11 @@
 //Date Created: 26 May 2016
 
 
-public class CurrencyAddJava{
+public class CurrencyAdd{
 	//Responsible for adding a string of currency values and out the sum in currency form
 	//eg. "+R1,000.00|-R200.10|+R1,751.00|+R1,000,000.01" to a sum total
 
-	public static String ConvertToCents(String input){
+	public static String Total(String input){
 		//will convert the input into a float, the total sum number in a float value. Still needs to converted into Currency format
 		//String must have all values divided by a pipe ("|")
 		String intValueString;
@@ -51,12 +51,7 @@ public class CurrencyAddJava{
 			val = val.substring(0,val.length()-3);
 		}
 		//add the decimal and the currency symbol. also add the last numbers after the final comma eg. R12,345.00 val==12
-		if (val.length()>0){
-			currency = sign + "" + currencySymbol + "" + val + "" + currency + "." + cents;
-		}
-		else{
-			currency = sign + "" + currencySymbol + "" + currency + "." + cents;
-		}
+		currency = sign + "" + currencySymbol + "" + val + "" + currency + "." + cents;
 		return currency;
 	}
 }

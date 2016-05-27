@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CurrencyAdd.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">.</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">CurrencyAdd.java</span></div><h1>CurrencyAdd.java</h1><pre class="source lang-java linenums">//Author: Grant Wilson
+//Date Created: 26 May 2016
+
+
+<span class="nc" id="L5">public class CurrencyAdd{</span>
+	//Responsible for adding a string of currency values and out the sum in currency form
+	//eg. &quot;+R1,000.00|-R200.10|+R1,751.00|+R1,000,000.01&quot; to a sum total
+
+	public static String Total(String input){
+		//will convert the input into a float, the total sum number in a float value. Still needs to converted into Currency format
+		//String must have all values divided by a pipe (&quot;|&quot;)
+		String intValueString;
+<span class="fc" id="L13">		String[] stringValues = input.split(&quot;\\|&quot;); //converts the string to an array of strings. seperated by pipes</span>
+<span class="fc" id="L14">		char currencySymbol = stringValues[0].charAt(1); //used to store the symbol of the currency. store as &quot;R&quot; by default</span>
+<span class="fc" id="L15">		int intValue = 0;</span>
+<span class="fc" id="L16">		int totalAmount = 0;</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">		for (String val : stringValues){</span>
+<span class="fc" id="L18">			intValue+=cleanData(val);</span>
+		}
+<span class="fc bfc" id="L20" title="All 2 branches covered.">		if (intValue&gt;=0){</span>
+<span class="fc" id="L21">			intValueString = &quot;+&quot;+intValue;</span>
+		}else{
+<span class="fc" id="L23">			intValueString = intValue+&quot;&quot;;</span>
+		}
+<span class="fc" id="L25">		String currency = ConvertToCurrency(intValueString, currencySymbol);//return the final answer;</span>
+<span class="fc" id="L26">		return currency;</span>
+	}
+
+	private static int cleanData(String val){
+		//will take in data in a currency for along with a sign &quot;+,-&quot; and return an int
+		//eg. -R1,234,567.89 will return -123456789
+		//cleans data, replaces commas with full stops and gets rid of currency symbol,,, eg &quot;R&quot; &quot;$&quot;
+
+<span class="fc" id="L34">		val = val.replace(&quot;,&quot;,&quot;&quot;);</span>
+<span class="fc" id="L35">		val = val.replace(&quot;.&quot;,&quot;&quot;);</span>
+<span class="fc" id="L36">		val = val.substring(0,1)+val.substring(2);//removing the currency symbol</span>
+<span class="fc" id="L37">		int intVal = Integer.parseInt(val);</span>
+<span class="fc" id="L38">		return intVal;</span>
+	}
+
+	private static String ConvertToCurrency(String val, char currencySymbol){
+		//convert an integer value into a string value
+		//eg.. -123456789 will return  -R1,234,567.89
+<span class="fc" id="L44">		char sign = val.charAt(0);</span>
+<span class="fc" id="L45">		val = val.substring(1);</span>
+<span class="fc" id="L46">		String cents = val.substring(val.length()-2);</span>
+<span class="fc" id="L47">		val = val.substring(0,val.length()-2);</span>
+<span class="fc" id="L48">		String currency = &quot;&quot;;</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">		while (val.length()&gt;3){</span>
+<span class="fc" id="L50">			currency =  &quot;,&quot; + val.substring(val.length()-3) + currency;</span>
+<span class="fc" id="L51">			val = val.substring(0,val.length()-3);</span>
+		}
+		//add the decimal and the currency symbol. also add the last numbers after the final comma eg. R12,345.00 val==12
+<span class="fc" id="L54">		currency = sign + &quot;&quot; + currencySymbol + &quot;&quot; + val + &quot;&quot; + currency + &quot;.&quot; + cents;</span>
+<span class="fc" id="L55">		return currency;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
